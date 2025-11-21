@@ -341,18 +341,26 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 
 ### **Phase 1.6: SPECIFICATION (The Blueprint)**
 
-**Purpose**: Create detailed implementation plan.
+**Purpose**: Create detailed implementation plan (Product Requirement Prompt).
 
 **State at start**: "Phase 1.6: SPECIFICATION"
+
+**IMPORTANT**: For non-technical users, use the **PRP Builder process** from `05-prp-builder-guide.md`. This section explains the traditional specification format, but the PRP Builder provides a structured way to generate complete technical specifications through conversation.
 
 #### What to Do:
 
 1. **Check learned patterns**:
    - Load PROJECT-STATE.md Section 5.C: "Project Structure Map"
    - Load PROJECT-STATE.md Section 5.B: Relevant coding patterns
+   - Load PROJECT-STATE.md Section 4.B: Codebase Intelligence
    - Match established conventions
 
-2. **Create detailed specification**:
+2. **Generate PRP (Product Requirement Prompt)**:
+   - Use the interview process from `05-prp-builder-guide.md`
+   - Translate user's plain English requirements into technical specification
+   - Include all elements: Goal, Success Criteria, Context, Implementation Blueprint, Validation
+
+3. **Create detailed specification** (or use PRP format):
 
 #### Output Format:
 
@@ -407,6 +415,8 @@ function validateInput(data: FormData): boolean
 3. Core Logic: Implement validation and API call
 4. UI Binding: Connect form to real data
 
+**Save PRP**: Update PROJECT-STATE.md Section 2.C with the complete PRP for reference during implementation.
+
 **Then**: *STOP & WAIT for user review.*
 
 ---
@@ -419,6 +429,8 @@ function validateInput(data: FormData): boolean
 
 #### What to Do:
 
+**If using PRP process**: Present plain English summary (see `05-prp-builder-guide.md` Stage 5)
+
 Ask explicitly:
 
 ```markdown
@@ -428,6 +440,7 @@ I've planned:
 - [Brief summary of approach]
 - [File count to create/modify]
 - [Estimated complexity]
+- Testing checklist: [X manual tests you'll perform]
 
 **Are you confident this plan solves the problem with minimal future headaches?**
 
@@ -726,6 +739,14 @@ Does it look right and behave correctly?
 - [ ] Responsive on mobile
 ```
 
+**Then**: Run automated validation (see `06-automated-validation.md`):
+- Build check
+- Type check
+- Code quality check
+- Automated tests (if available)
+
+Report results in plain English. Fix any failures before proceeding to Phase 3.
+
 **Then**: *WAIT for user confirmation UI works.*
 
 ---
@@ -755,13 +776,49 @@ If an error occurs during Phase 2:
 
 **State at start**: "Phase 3: TESTING"
 
+**IMPORTANT**: Use automated validation process from `06-automated-validation.md` for all testing phases. This provides:
+- Level 1: Build & quality checks (automated)
+- Level 2: Functional tests (automated)
+- Level 3: Manual testing checklist (user performs)
+
 ---
 
-### **Phase 3.1: MANUAL WALKTHROUGH**
+### **Phase 3.1: AUTOMATED TESTING**
+
+**Purpose**: Run automated checks and tests before manual testing.
+
+**State at start**: "Phase 3.1: AUTOMATED TESTING"
+
+#### What to Do:
+
+Follow `06-automated-validation.md` process:
+
+1. **Run Level 1 checks** (Build & Quality):
+   - Build check
+   - Type check (if TypeScript)
+   - Lint check
+   - Console error check
+
+2. **Run Level 2 checks** (Functional Tests):
+   - Unit tests
+   - Integration tests
+   - E2E tests (if available)
+
+3. **Report results in plain English**:
+   - ✅ "All 23 tests passed"
+   - ❌ "Found 2 issues, fixing now..."
+
+4. **Fix any failures** and re-run until all pass
+
+**Then**: Generate manual testing checklist for Phase 3.2
+
+---
+
+### **Phase 3.2: MANUAL WALKTHROUGH**
 
 **Purpose**: Provide step-by-step test script for user.
 
-**State at start**: "Phase 3.1: MANUAL WALKTHROUGH"
+**State at start**: "Phase 3.2: MANUAL WALKTHROUGH"
 
 #### What to Do:
 
@@ -812,11 +869,11 @@ If an error occurs during Phase 2:
 
 ---
 
-### **Phase 3.2: EDGE CASE ASSAULT**
+### **Phase 3.3: EDGE CASE ASSAULT**
 
 **Purpose**: Intentionally try to break the implementation.
 
-**State at start**: "Phase 3.2: EDGE CASE ASSAULT"
+**State at start**: "Phase 3.3: EDGE CASE ASSAULT"
 
 #### What to Do:
 
@@ -857,11 +914,11 @@ Refer back to Phase 1.5 Premortem. Let's intentionally trigger those risks:
 
 ---
 
-### **Phase 3.3: FIX & REPEAT**
+### **Phase 3.4: FIX & REPEAT**
 
 **Purpose**: Fix any bugs found and re-test.
 
-**State at start**: "Phase 3.3: FIX & REPEAT"
+**State at start**: "Phase 3.4: FIX & REPEAT"
 
 #### What to Do:
 

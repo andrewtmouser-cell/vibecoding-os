@@ -34,6 +34,30 @@ This is a **system**, not code. It defines:
 - ✅ Patterns improve over time
 - ✅ Can't deploy broken code (guardrails)
 
+## What's New
+
+**Recent Enhancements (2025)**:
+
+🎯 **PRP Builder** - Generate technical specs through plain English conversation
+- No technical knowledge required
+- AI interviews you and translates to complete specifications
+- One-pass implementation success
+
+🧪 **Automated Validation** - Testing without coding knowledge
+- AI writes and runs tests automatically
+- Plain English test reports
+- Three-level validation system
+
+⚡ **Claude Code Integration** - Slash commands for faster workflow
+- `/start-task`, `/continue`, `/status` and more
+- Automatic system file loading
+- Streamlined project management
+
+📊 **Enhanced PROJECT-STATE** - Better state tracking
+- Dedicated PRP section per task
+- Codebase intelligence gathering
+- Improved pattern organization
+
 ## Quick Start
 
 ### 1. Add to Your Project
@@ -55,6 +79,18 @@ cp vibecoding-os/templates/PROJECT-STATE.md .vibecoding/
 
 ### 3. Start Your First Task
 
+**Option A: Using Claude Code (Recommended)**
+
+If using Claude Code in VS Code:
+
+```
+/quick-start
+```
+
+Then follow the setup guide.
+
+**Option B: Any AI Assistant**
+
 In your AI chat (Claude, ChatGPT, etc.):
 
 ```
@@ -64,6 +100,19 @@ I want to build [describe your project].
 Start with Phase 0 (Triage).
 ```
 
+### Claude Code Slash Commands
+
+**NEW**: If using Claude Code, you get convenient slash commands:
+
+- `/quick-start` - First-time setup guide
+- `/start-task` - Start a new task with full system loaded
+- `/continue` - Continue current task from PROJECT-STATE
+- `/review-patterns` - See what AI has learned about your preferences
+- `/run-tests` - Run automated validation and tests
+- `/status` - Show current project status and progress
+
+These commands automatically load the system files and PROJECT-STATE for you!
+
 ## How It Works
 
 ### The 5-Phase Workflow
@@ -72,13 +121,14 @@ Start with Phase 0 (Triage).
 - AI classifies task as trivial or complex
 - Decides which phases to execute
 
-**Phase 1: Planning** (6 subphases)
-- Discovery (interview you)
-- Research (check existing code)
-- Brainstorm (propose 3 approaches)
-- Evaluation (score options)
-- Premortem (identify risks)
-- Specification (detailed plan)
+**Phase 1: Planning** (7 subphases with PRP Builder)
+- Discovery (AI interviews you in plain English)
+- Research (AI checks existing code patterns)
+- Brainstorm (AI proposes 3 approaches)
+- Evaluation (AI scores options)
+- Premortem (AI identifies risks)
+- Specification (AI generates complete PRP)
+- Approval (you review plain English summary)
 
 **Phase 2: Coding** (4 steps)
 - Scaffolding (structure)
@@ -86,10 +136,11 @@ Start with Phase 0 (Triage).
 - Core Logic (implement features)
 - UI Binding (connect everything)
 
-**Phase 3: Testing**
-- Manual walkthrough
-- Edge case assault
-- Fix & repeat
+**Phase 3: Testing** (Automated + Manual)
+- Automated testing (AI writes & runs tests)
+- Manual walkthrough (you test with checklist)
+- Edge case assault (stress testing)
+- Fix & repeat (until all pass)
 
 **Phase 4: Review & Learning**
 - Code audit
@@ -121,16 +172,21 @@ vibecoding-os/
 ├── 02-seal-engine.md            # Learning mechanism
 ├── 03-constraints-quality.md    # Quality guardrails
 ├── 04-ai-instructions.md        # How AI should behave
+├── 05-prp-builder-guide.md      # NEW: Prompt engineering for non-coders
+├── 06-automated-validation.md   # NEW: Testing without coding knowledge
 │
-├── templates/
-│   ├── PROJECT-STATE.md         # Copy to each project
-│   ├── pattern-template.md      # For creating patterns
-│   └── task-log-entry.md        # For tracking tasks
+├── .claude/
+│   └── commands/                # NEW: Slash commands for Claude Code
+│       ├── start-task.md        # Start new task with system loaded
+│       ├── continue.md          # Continue from PROJECT-STATE
+│       ├── review-patterns.md   # Show learned patterns
+│       ├── run-tests.md         # Run automated validation
+│       ├── status.md            # Show project status
+│       └── quick-start.md       # First-time setup guide
 │
-└── starter-kits/
-    ├── nextjs-app/              # Next.js App Router starter
-    ├── react-spa/               # React SPA starter
-    └── express-api/             # Express API starter
+└── templates/
+    ├── PROJECT-STATE.md         # Copy to each project (enhanced)
+    └── .gitignore-template      # Recommended .gitignore
 ```
 
 ## Core Principles
@@ -210,7 +266,57 @@ Applying learned pattern:
 
 ## Key Features
 
-### 🛡️ Quality Guardrails
+### 🎯 PRP Builder - Prompt Engineering for Non-Coders
+
+**NEW**: Generate complete technical specifications through conversation.
+
+**The problem**: Traditional specs require technical knowledge (file paths, libraries, APIs).
+
+**The solution**: AI interviews you in plain English, then translates to a complete Product Requirement Prompt (PRP).
+
+**How it works**:
+1. AI asks simple questions ("What should happen when they click?")
+2. You answer in plain English (no technical knowledge needed)
+3. AI generates complete technical specification
+4. You review plain English summary and approve
+5. AI builds it in one pass
+
+**Benefits**:
+- One-pass implementation success
+- No technical jargon required
+- Complete specifications every time
+- Automated test generation from specs
+
+See: `05-prp-builder-guide.md`
+
+### 🧪 Automated Validation - Testing Without Coding
+
+**NEW**: AI writes and runs tests automatically, reports in plain English.
+
+**Three levels**:
+- **Level 1**: Build & quality checks (automated)
+- **Level 2**: Functional tests (AI writes & runs)
+- **Level 3**: Manual testing checklist (you perform)
+
+**You see**:
+```
+✅ All automated checks passed!
+✅ Build successful (no errors)
+✅ Type checking passed
+✅ 23 tests passed (4.7s)
+
+Ready for your manual testing!
+```
+
+**You never**:
+- Write test code
+- Read test code
+- Debug failing tests
+- Interpret technical errors
+
+See: `06-automated-validation.md`
+
+### ��️ Quality Guardrails
 
 The system enforces:
 - No clever code
