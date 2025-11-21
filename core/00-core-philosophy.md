@@ -1,5 +1,19 @@
 # Core Philosophy
 
+**This document explains the mindset and rules that guide every decision in Vibecoding OS.**
+
+---
+
+## Origin Story
+
+This system emerged from real frustration: coding with AI created chaos instead of progress. Each session started from scratch. Quality varied wildly. Simple features required endless iteration. Context resets destroyed momentum.
+
+The problem wasn't the AI—it was the lack of structure. Developers have decades of learned methodology in their heads. Non-coders don't. This OS is that methodology, externalized and automated.
+
+**Vibecoding OS is the result**: a structured system that enforces quality, learns patterns, and translates requirements into working code—for people who can't debug what they build.
+
+---
+
 ## The Problem Vibecoding OS Solves
 
 ### For Non-Technical Builders:
@@ -17,6 +31,35 @@ You can describe what you want in plain English. AI can write the code. But:
 **AI needs an operating system.**
 
 Just like your computer needs Windows/Mac to run programs reliably, AI needs a structured system to build software reliably.
+
+---
+
+## Who This Philosophy Applies To
+
+This methodology is designed for:
+
+- **Non-technical builders** who use AI to create software but cannot debug complex systems
+- **Startup founders** building MVPs without technical co-founders
+- **Creative technologists** focused on outcomes, not implementation details
+- **Researchers and academics** needing tools but lacking programming expertise
+- **Designers and product people** who can envision but not code
+- **Anyone who builds with AI** but relies entirely on the AI to maintain and fix code
+
+**If you can't confidently debug broken code, this system is for you.**
+
+---
+
+## Anti-Goals
+
+To set clear expectations, here's what Vibecoding OS is **NOT** about:
+
+- ❌ **Not for advanced developers** - If you can debug complex systems, you don't need this level of structure
+- ❌ **Not about speed** - "Move fast and break things" only works if you can fix what you break
+- ❌ **Not about clever optimizations** - Boring code that works beats clever code that doesn't
+- ❌ **Not for cutting-edge tech** - Bleeding edge means bleeding. We use proven, stable tools
+- ❌ **Not for microservices** - Default to monoliths. Complexity is the enemy when you can't debug
+
+**This system prioritizes reliability over velocity, clarity over cleverness, and sustainability over innovation.**
 
 ---
 
@@ -305,6 +348,38 @@ Track in PROJECT-STATE.md Section 8:
 2. Get user approval in Phase 1.7
 3. Note in PROJECT-STATE.md Section 9: Important Decisions
 4. Review in Phase 4
+
+---
+
+## What This Philosophy Guarantees
+
+When you follow this methodology, you get:
+
+### **1. Consistent Quality**
+Every task follows the same standards. No more "why did this work yesterday but not today?"
+
+### **2. Predictable Workflow**
+Always know what phase you're in and what comes next. No more wondering "what should I do now?"
+
+### **3. Reduced Errors**
+Quality guardrails catch problems before they ship. Junior Dev Rule prevents unmaintainable code.
+
+### **4. Faster Ramp-Up**
+Clear structure means less time figuring out "how to work with AI" and more time building.
+
+### **5. Cumulative Project Intelligence**
+Every task teaches the system. Task 20 is smoother than Task 1. Patterns compound over time.
+
+### **6. Reliable Task Output**
+Specification → Implementation → Testing → Review means code actually works when deployed.
+
+### **7. Continuity Across Sessions**
+PROJECT-STATE.md survives context resets. Resume any project, any time, with any AI.
+
+### **8. Debuggable Code**
+Even though you can't debug, the AI can—because code follows Junior Dev Rule.
+
+**Bottom line**: You won't ship perfect code every time. But you'll ship working code consistently, which is better than perfect code occasionally.
 
 ---
 

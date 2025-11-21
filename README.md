@@ -18,6 +18,36 @@ Think of it as the structured framework that turns unreliable AI coding assistan
 
 ---
 
+## What's New
+
+**Monorepo Refactor (2025)**:
+
+🏗️ **Monorepo Structure** - Organized into core + integrations
+- Platform-agnostic `core/` directory works with any AI
+- Platform-specific `integrations/` for enhanced features
+- Clear separation of concerns
+
+🔌 **Claude Code Integration** - Deep integration with specialized features
+- Slash commands: `/vibecoding`, `/triage`, `/seal`, `/phase`, `/spawn`
+- Specialized sub-agents: PLANNER, BUILDER, TESTER, SEAL
+- CLI tools for validation and status checks
+- Complete setup guide with 4 levels
+
+📚 **Enhanced Documentation** - Comprehensive guides added
+- System flowchart with visual diagrams
+- Terminology glossary with official definitions
+- Cross-reference map showing file relationships
+- Appendices with detailed examples
+
+**Previous Features**:
+- 🎯 PRP Builder for plain English specifications
+- 🧪 Automated validation and testing
+- 📊 Enhanced PROJECT-STATE tracking
+
+> **Note**: Some previous features (PRP Builder, Automated Validation) may need updates to match the new monorepo structure. Contributions welcome!
+
+---
+
 ## What Problem Does This Solve?
 
 ### Without Vibecoding OS:

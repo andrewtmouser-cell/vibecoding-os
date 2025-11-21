@@ -45,7 +45,9 @@
 
 ## 2. TASK LOG
 
-### Task #1: [Example Task - DELETE THIS]
+### 2.A: Completed Tasks
+
+#### Task #1: [Example Task - DELETE THIS]
 - **Date:** 2025-01-20
 - **Type:** Setup
 - **Status:** Completed ✅
@@ -59,21 +61,74 @@
 
 ---
 
-### Task #2: [Your First Task Will Go Here]
-- **Date:**
-- **Type:** [Feature / Bug Fix / Refactor / Setup]
-- **Status:** [Planned / In Progress / Completed / Blocked]
-- **Phase:** [0-4]
-- **Rating:** [1-5 after completion]
-- **Files Modified:**
-  - [List files]
-- **Notes:**
-- **Learned:**
+*AI will add completed tasks here*
 
 ---
 
-### Task #3: [Future Task]
-...
+### 2.B: Current Task
+
+**Task #:** [Number]
+**Description:** [What we're building]
+**Type:** [Feature / Bug Fix / Refactor / Setup]
+**Status:** [Planning / Coding / Testing / Review]
+**Current Phase:** [0 / 1 / 2 / 3 / 4]
+**Started:** [Date]
+
+**Progress:**
+- [x] Phase 0: Triage completed
+- [ ] Phase 1: Planning in progress
+- [ ] Phase 2: Coding
+- [ ] Phase 3: Testing
+- [ ] Phase 4: Review
+
+**Files Modified:**
+- [List files as they're created/modified]
+
+**Notes:**
+- [Running notes during task execution]
+
+---
+
+### 2.C: Current PRP (Product Requirement Prompt)
+
+*AI will populate this during Phase 1.6 (Specification)*
+
+**Goal:**
+[1-2 sentence plain English description]
+
+**Success Criteria:**
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+- [ ] [Criterion 3]
+
+**Context:**
+- Tech Stack: [From Section 1]
+- Existing Patterns: [References to similar features]
+- Dependencies: [What's needed]
+
+**Implementation Blueprint:**
+
+*Technical specification (AI writes this, not user)*
+
+**Files to Create:**
+- [Path to new file 1]
+- [Path to new file 2]
+
+**Files to Modify:**
+- [Path to existing file 1] - [What changes]
+- [Path to existing file 2] - [What changes]
+
+**Dependencies to Install:**
+- [Package name and version if needed]
+
+**Manual Testing Checklist:**
+- [ ] [Test scenario 1]
+- [ ] [Test scenario 2]
+- [ ] [Test scenario 3]
+
+**Edge Cases:**
+- [ ] [Edge case 1]
+- [ ] [Edge case 2]
 
 ---
 
@@ -93,6 +148,8 @@
 ---
 
 ## 4. PROJECT STRUCTURE
+
+### 4.A: File Tree
 
 ```
 project-root/
@@ -114,6 +171,83 @@ project-root/
 - Components: [e.g., PascalCase.tsx]
 - Utilities: [e.g., camelCase.ts]
 - Styles: [e.g., component.module.css]
+
+---
+
+### 4.B: Codebase Intelligence
+
+*AI will populate this through research during tasks*
+
+**Common Patterns Found:**
+
+*API Endpoints:*
+- Location: [e.g., /src/app/api/]
+- Naming: [e.g., /api/[resource]/route.ts]
+- Auth pattern: [e.g., Check Clerk userId in headers]
+- Response format: [e.g., { data, error }]
+- Error handling: [e.g., try/catch with NextResponse]
+
+*Components:*
+- Location: [e.g., /src/components/]
+- Structure: [e.g., Feature-based folders]
+- Props pattern: [e.g., TypeScript interfaces exported]
+- Style pattern: [e.g., Tailwind inline or CSS modules]
+
+*Database:*
+- Client location: [e.g., /src/lib/db.ts]
+- Access pattern: [e.g., Singleton instance]
+- Query style: [e.g., Prisma / Supabase / Raw SQL]
+- Migration location: [e.g., /prisma/migrations/]
+
+*Authentication:*
+- Provider: [e.g., Clerk / NextAuth / Custom]
+- User ID format: [e.g., "user_xxxxx"]
+- Protected route pattern: [e.g., Check auth in middleware]
+- Session handling: [e.g., Cookies / JWT / localStorage]
+
+*State Management:*
+- Approach: [e.g., React hooks / Zustand / Redux]
+- Global state location: [e.g., /src/store/]
+- Data fetching: [e.g., SWR / React Query / fetch]
+
+*Forms:*
+- Library: [e.g., React Hook Form / Formik / Native]
+- Validation: [e.g., Zod / Yup / Manual]
+- Component library: [e.g., shadcn/ui / MUI / Custom]
+
+*Error Handling:*
+- User-facing: [e.g., Toast notifications from /lib/toast]
+- Logging: [e.g., console.error / Sentry / Custom]
+- Error boundaries: [e.g., /src/components/ErrorBoundary]
+
+*Testing:*
+- Framework: [e.g., Jest / Vitest / None yet]
+- Test location: [e.g., __tests__/ or *.test.ts]
+- E2E: [e.g., Playwright / Cypress / None]
+
+**Reusable Utilities:**
+- [Function name] - [Location] - [Purpose]
+- [e.g., formatDate - /src/lib/utils.ts - Formats dates consistently]
+
+**Import Aliases:**
+- `@/` → [e.g., /src/]
+- `@components/` → [e.g., /src/components/]
+- [Other aliases from tsconfig/jsconfig]
+
+**Environment Variables:**
+- Required: [List critical env vars without values]
+- Optional: [List optional env vars]
+- Location: [e.g., .env.local]
+
+**Gotchas & Quirks:**
+- [e.g., "Supabase RLS policies must match userId exactly"]
+- [e.g., "Next.js 'use client' required for any useState"]
+- [Known issues specific to this codebase]
+
+**Reference Documentation:**
+- [Framework docs: URL]
+- [Library docs: URL]
+- [API docs: URL]
 
 ---
 
