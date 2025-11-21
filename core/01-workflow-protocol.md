@@ -1,5 +1,11 @@
 # Workflow Protocol
 
+**Foundation**: This workflow implements the principles from [00-core-philosophy.md](00-core-philosophy.md).
+**Quality Rules**: All work must follow constraints in [03-constraints-quality.md](03-constraints-quality.md).
+**Learning System**: SEAL updates occur at specific points in this workflow (see [02-seal-engine.md](02-seal-engine.md)).
+
+---
+
 **CRITICAL**: AI must operate in ONE phase at a time. Never skip ahead.
 
 ---
@@ -32,9 +38,11 @@ Analyze the user's request and classify as:
 
 Before deciding:
 1. Load `.vibecoding/PROJECT-STATE.md`
-2. Check Section: "Triage Patterns"
+2. Check Section 5.B.1: Triage Patterns
 3. Match request against known trivial/complex indicators
 4. Apply pattern if confidence ≥ 0.8
+
+**Pattern application details**: See [02-seal-engine.md](02-seal-engine.md) Section: Pattern Application.
 
 ### Step 3: Route
 
@@ -54,7 +62,7 @@ Reason: [Brief explanation]
 
 ### Step 4: Log Task
 
-Add entry to PROJECT-STATE.md Section 5.A.2:
+Add entry to PROJECT-STATE.md Section 2 (Task Log):
 
 ```markdown
 ### Task #[N]: [Task Description]
@@ -84,9 +92,10 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 #### What to Do:
 
 1. **Check learned patterns first**:
-   - Load PROJECT-STATE.md Section 5.B.2: "Discovery Patterns"
+   - Load PROJECT-STATE.md Section 5.B.2: Discovery Patterns
    - Use questions that worked before
    - Avoid questions that confused user
+   - Apply learned questioning patterns (see [02-seal-engine.md](02-seal-engine.md) Section: What SEAL Learns)
 
 2. **Ask outcome-focused questions**:
    - What should happen when...?
@@ -138,8 +147,8 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.3: "Research Patterns"
-   - Load PROJECT-STATE.md Section 5.C: "Project Structure Map"
+   - Load PROJECT-STATE.md Section 5.B.3: Research Patterns
+   - Load PROJECT-STATE.md Section 5.C: Project Structure Map
    - Use known file locations for this task type
 
 2. **For this task type, check**:
@@ -193,16 +202,18 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.4: "Architecture Preferences"
+   - Load PROJECT-STATE.md Section 5.B.4: Architecture Preferences
    - Note which approaches user picked before
    - Note what user values (simplicity, features, etc.)
 
-2. **Generate 3 approaches**:
+2. **Remember the "Keep It Boring" principle** from [00-core-philosophy.md](00-core-philosophy.md)
+
+3. **Generate 3 approaches**:
    - **Approach 1: Simple/Monolith** (REQUIRED)
    - **Approach 2: Moderate**
    - **Approach 3: Complex/Feature-Rich**
 
-3. **For each approach, describe**:
+4. **For each approach, describe**:
    - High-level overview
    - What files need to be created/modified
    - Estimated complexity (Low/Medium/High)
@@ -254,10 +265,10 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 
 #### What to Do:
 
-1. **Score each approach on**:
-   - **Simplicity** (1-5): Can a junior dev understand it?
-   - **Reliability** (1-5): Will it work consistently?
-   - **Vibecodability** (1-5): Can an AI fix it later if it breaks?
+1. **Score each approach on** (based on [00-core-philosophy.md](00-core-philosophy.md) principles):
+   - **Simplicity** (1-5): Junior Dev Rule - Can a junior dev understand it?
+   - **Reliability** (1-5): Methodical Over Fast - Will it work consistently?
+   - **Vibecodability** (1-5): Keep It Boring - Can an AI fix it later if it breaks?
 
 2. **Calculate total score** for each approach
 
@@ -295,7 +306,7 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.D: "Actual Risks Encountered"
+   - Load PROJECT-STATE.md Section 6: Actual Risks Encountered
    - Prioritize risks that ACTUALLY happened in this project
    - Deprioritize theoretical risks that never occurred
 
@@ -331,8 +342,8 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 [Continue for all risks]
 
 **Risks that actually occurred in this project before**:
-- [Risk from Section 5.D]
-- [Risk from Section 5.D]
+- [Risk from Section 6]
+- [Risk from Section 6]
 ```
 
 **Then**: *STOP & WAIT for user to review risks.*
@@ -348,7 +359,7 @@ Add entry to PROJECT-STATE.md Section 5.A.2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.C: "Project Structure Map"
+   - Load PROJECT-STATE.md Section 5.C: Project Structure Map
    - Load PROJECT-STATE.md Section 5.B: Relevant coding patterns
    - Match established conventions
 
@@ -449,6 +460,8 @@ Or provide feedback to adjust the plan.
 
 **CRITICAL**: Check after EVERY step. "Always be compiling."
 
+**Quality Requirements**: All code must follow [03-constraints-quality.md](03-constraints-quality.md).
+
 ---
 
 ### **Phase 2.1: SCAFFOLDING**
@@ -460,9 +473,10 @@ Or provide feedback to adjust the plan.
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.5: "Coding Style Patterns"
-   - Load PROJECT-STATE.MD Section 5.C: "Project Structure Map"
+   - Load PROJECT-STATE.md Section 5.B.5: Coding Style Patterns
+   - Load PROJECT-STATE.md Section 5.C: Project Structure Map
    - Match established file structure
+   - All code must follow [03-constraints-quality.md](03-constraints-quality.md) rules
 
 2. **Create directory structure** per specification
 
@@ -519,8 +533,8 @@ Did the environment setup without errors?
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.9: "Dummy Data Preferences"
-   - Load PROJECT-STATE.md Section 5.B.5: "Logging Preferences"
+   - Load PROJECT-STATE.md Section 5.B.9: Dummy Data Preferences
+   - Load PROJECT-STATE.md Section 5.B.5: Logging Preferences
 
 2. **Connect frontend to backend with HARDCODED DUMMY DATA**:
    - Use realistic dummy data (not "foo", "bar")
@@ -583,9 +597,10 @@ Click the button. Did you see the log/alert?
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.5: "Coding Style Patterns"
+   - Load PROJECT-STATE.md Section 5.B.5: Coding Style Patterns
    - Check for similar implemented features
    - Match variable naming, error handling patterns
+   - Follow [03-constraints-quality.md](03-constraints-quality.md) Section: Coding Constraints
 
 2. **Implement math/data processing functions**:
    - Follow established patterns
@@ -646,7 +661,7 @@ Does the logic handle the data correctly?
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.8: "UI Patterns"
+   - Load PROJECT-STATE.md Section 5.B.8: UI Patterns
    - Match component structure to existing
    - Use established styling approach
 
@@ -660,12 +675,12 @@ Does the logic handle the data correctly?
    - Follow established patterns (CSS Modules, Tailwind, etc.)
    - Ensure responsive design
 
-4. **Add Loading States**:
+4. **Add Loading States** (per [03-constraints-quality.md](03-constraints-quality.md) Section 7):
    - Show spinner/skeleton during async operations
    - Disable buttons during submission
    - Match existing loading patterns
 
-5. **Add Error Messages**:
+5. **Add Error Messages** (per [03-constraints-quality.md](03-constraints-quality.md) Section 8):
    - Plain English (not technical)
    - Actionable (tell user what to do)
    - Match existing error display pattern (toast, inline, modal)
@@ -732,6 +747,8 @@ Does it look right and behave correctly?
 
 ### **CODING EMERGENCY RULES**
 
+**From [03-constraints-quality.md](03-constraints-quality.md) Sections 14-15:**
+
 If an error occurs during Phase 2:
 
 1. **DO NOT rewrite the whole file**
@@ -744,7 +761,7 @@ If an error occurs during Phase 2:
    - Document why first approach failed
 
 3. **Document the issue**:
-   - Add to PROJECT-STATE.md Section 5.D: "Bugs Fixed"
+   - Add to PROJECT-STATE.md Section 6: Bugs Fixed
    - Note solution for future reference
 
 ---
@@ -766,7 +783,7 @@ If an error occurs during Phase 2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.6: "Testing Preferences"
+   - Load PROJECT-STATE.md Section 5.B.6: Testing Preferences
    - Use test format that worked before
    - Match user's testing style
 
@@ -821,9 +838,9 @@ If an error occurs during Phase 2:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.D: "Actual Risks Encountered"
+   - Load PROJECT-STATE.md Section 6: Actual Risks Encountered
    - Focus on edge cases user actually tests
-   - Reference Phase 1.5 Premortem risks
+   - Reference Phase 1.5 Premortem risks from earlier in this task
 
 2. **Create edge case tests**:
    - Based on risks that ACTUALLY happened before
@@ -869,7 +886,7 @@ Refer back to Phase 1.5 Premortem. Let's intentionally trigger those risks:
    - Identify root cause
    - Propose fix
    - Implement fix (following Phase 2 rules)
-   - Update PROJECT-STATE.md Section 5.D with bug + solution
+   - Update PROJECT-STATE.md Section 6 with bug + solution
 
 2. **Re-run tests**:
    - Repeat Phase 3.1 for affected areas
@@ -899,10 +916,10 @@ Refer back to Phase 1.5 Premortem. Let's intentionally trigger those risks:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.5: "Coding Style Patterns"
+   - Load PROJECT-STATE.md Section 5.B.5: Coding Style Patterns
    - Verify code matches established conventions
 
-2. **Scan for**:
+2. **Run quality checklist from [03-constraints-quality.md](03-constraints-quality.md) Section: Quality Checklist**:
    - console.log statements (remove from production)
    - TODO comments (resolve or document)
    - Unused variables/imports
@@ -945,7 +962,7 @@ Refer back to Phase 1.5 Premortem. Let's intentionally trigger those risks:
 #### What to Do:
 
 1. **Check learned patterns**:
-   - Load PROJECT-STATE.md Section 5.B.7: "Documentation Preferences"
+   - Load PROJECT-STATE.md Section 5.B.7: Documentation Preferences
    - Write in user's preferred style (plain English, brief, etc.)
 
 2. **Update README.md** (or project docs):
@@ -995,9 +1012,13 @@ Users can now log in with email and password.
 
 **DO NOT SKIP THIS STEP.**
 
+**CRITICAL SEAL UPDATE POINT**
+
+This is where SEAL learning happens. Follow the complete protocol in [02-seal-engine.md](02-seal-engine.md) Section: SEAL Update Protocol.
+
 #### What to Do:
 
-1. **Update Section 5.A.2: Task Log**:
+1. **Update PROJECT-STATE.md Section 2: Task Log**:
    - Mark current task as completed
    - Add completion date
    - Add rating (once user provides it)
@@ -1025,19 +1046,19 @@ Quick feedback to improve future tasks:
 
 3. **If rating ≥ 4 (Successful task)**:
    - Extract what worked
-   - Update relevant patterns in Section 5.B
+   - Update relevant patterns in PROJECT-STATE.md Section 5.B (see [02-seal-engine.md](02-seal-engine.md) for pattern update rules)
    - Increase pattern confidence scores
    - Add new patterns if 3+ similar successful tasks
 
 4. **If rating ≤ 3 (Needs improvement)**:
    - Note what went wrong
    - Update patterns to avoid same mistake
-   - Document in Section 5.D if it's a recurring issue
+   - Document in PROJECT-STATE.md Section 6 if it's a recurring issue
 
-5. **Update other sections as needed**:
+5. **Update other PROJECT-STATE.md sections as needed**:
    - Section 5.C: Project Structure (if new files/structure)
-   - Section 5.D: Bugs/Risks (if new issues discovered)
-   - Section 5.E: Project Rules (if new conventions emerged)
+   - Section 6: Bugs/Risks (if new issues discovered)
+   - Section 8: Metrics
 
 #### Example Update:
 
@@ -1095,6 +1116,13 @@ Phase 4: Review
   4.2 Documentation
   4.3 SEAL Learning [MANDATORY]
 ```
+
+**System Integration**:
+- Philosophy principles: [00-core-philosophy.md](00-core-philosophy.md)
+- Quality rules: [03-constraints-quality.md](03-constraints-quality.md)
+- SEAL learning: [02-seal-engine.md](02-seal-engine.md)
+- AI behavior: [04-ai-instructions.md](04-ai-instructions.md)
+- State tracking: PROJECT-STATE.md
 
 ---
 

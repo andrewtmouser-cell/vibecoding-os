@@ -1,0 +1,474 @@
+#!/bin/bash
+
+# Vibecoding OS CLI Wrapper
+# Usage: ./scripts/claude-vibecoding [command] [args...]
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROJECT_STATE="${PROJECT_ROOT}/.vibecoding/PROJECT-STATE.md"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Functions
+show_help() {
+  cat << EOF
+${GREEN}Vibecoding OS CLI${NC} - Run Vibecoding workflow from command line
+
+${YELLOW}USAGE:${NC}
+  ./scripts/claude-vibecoding [command] [args...]
+
+${YELLOW}COMMANDS:${NC}
+  ${BLUE}init${NC}                    Initialize PROJECT-STATE.md from template
+  ${BLUE}task [description]${NC}      Start a new task
+  ${BLUE}triage [request]${NC}        Run triage classification on a request
+  ${BLUE}status${NC}                  Show current project status
+  ${BLUE}patterns${NC}                Show learned SEAL patterns
+  ${BLUE}validate [file]${NC}         Validate file against quality constraints
+  ${BLUE}metrics${NC}                 Show project metrics and success rate
+  ${BLUE}phase [number]${NC}          Show details about a specific phase
+  ${BLUE}help${NC}                    Show this message
+
+${YELLOW}EXAMPLES:${NC}
+  ./scripts/claude-vibecoding init
+  ./scripts/claude-vibecoding task "Add a login form"
+  ./scripts/claude-vibecoding triage "Change button color to blue"
+  ./scripts/claude-vibecoding validate src/components/Button.tsx
+  ./scripts/claude-vibecoding patterns
+  ./scripts/claude-vibecoding phase 1.2
+
+${YELLOW}CONFIGURATION:${NC}
+  Project root: ${PROJECT_ROOT}
+  State file:   ${PROJECT_STATE}
+
+EOF
+}
+
+# Ensure PROJECT-STATE exists
+check_project_state() {
+  if [ ! -f "$PROJECT_STATE" ]; then
+    echo -e "${YELLOW}⚠ No PROJECT-STATE.md found${NC}"
+    echo "Run: ./scripts/claude-vibecoding init"
+    exit 1
+  fi
+}
+
+# Initialize project
+cmd_init() {
+  if [ -f "$PROJECT_STATE" ]; then
+    echo -e "${RED}✗ PROJECT-STATE.md already exists at:${NC}"
+    echo "  $PROJECT_STATE"
+    echo ""
+    echo "To reinitialize, delete it first:"
+    echo "  rm $PROJECT_STATE"
+    exit 1
+  fi
+
+  mkdir -p "$(dirname "$PROJECT_STATE")"
+  cp "${PROJECT_ROOT}/templates/PROJECT-STATE.md" "$PROJECT_STATE"
+
+  echo -e "${GREEN}✓ PROJECT-STATE.md initialized${NC}"
+  echo "  Location: $PROJECT_STATE"
+  echo ""
+  echo "Next steps:"
+  echo "  1. Edit PROJECT-STATE.md with your project details"
+  echo "  2. Run: ./scripts/claude-vibecoding status"
+}
+
+# Run triage
+cmd_triage() {
+  local request="$*"
+  if [ -z "$request" ]; then
+    echo -e "${RED}✗ Provide a request to triage${NC}"
+    echo "Usage: ./scripts/claude-vibecoding triage [request description]"
+    exit 1
+  fi
+
+  check_project_state
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}Phase 0: TRIAGE${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+  echo "Request: $request"
+  echo ""
+
+  # Simple heuristic triaging based on keywords
+  local is_trivial=0
+
+  if echo "$request" | grep -qiE "color|style|spacing|padding|margin|font"; then
+    is_trivial=1
+  elif echo "$request" | grep -qiE "text|label|copy|wording|typo|spelling"; then
+    is_trivial=1
+  elif echo "$request" | grep -qiE "rename|variable name|function name"; then
+    is_trivial=1
+  elif echo "$request" | grep -qiE "remove.*console|delete.*comment"; then
+    is_trivial=1
+  fi
+
+  if [ $is_trivial -eq 1 ]; then
+    echo -e "${BLUE}Classification: TRIVIAL${NC}"
+    echo ""
+    echo "Reasoning:"
+    echo "  • Visual/text-only change"
+    echo "  • No architecture modifications needed"
+    echo "  • Single file likely affected"
+    echo ""
+    echo -e "${YELLOW}Next Step: Skip to Phase 2 (Coding)${NC}"
+  else
+    echo -e "${BLUE}Classification: COMPLEX${NC}"
+    echo ""
+    echo "Reasoning:"
+    echo "  • New feature or structural change"
+    echo "  • Multiple files likely affected"
+    echo "  • Requires planning and risk analysis"
+    echo ""
+    echo -e "${YELLOW}Next Step: Initiate Phase 1 (Planning)${NC}"
+  fi
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# Show status
+cmd_status() {
+  check_project_state
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}Project Status${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+
+  # Extract key info from PROJECT-STATE.md
+  local project_name=$(grep "^\*\*Project Name:\*\*" "$PROJECT_STATE" | sed 's/\*\*Project Name:\*\* *//' | xargs)
+  local status=$(grep "^\*\*Status:\*\*" "$PROJECT_STATE" | sed 's/\*\*Status:\*\* *//' | xargs)
+  local current_task=$(grep "^\*\*Current Task:\*\*" "$PROJECT_STATE" | sed 's/\*\*Current Task:\*\* *//' | xargs)
+  local current_phase=$(grep "^\*\*Current Phase:\*\*" "$PROJECT_STATE" | sed 's/\*\*Current Phase:\*\* *//' | xargs)
+  local last_updated=$(grep "^\*\*Last Updated:\*\*" "$PROJECT_STATE" | sed 's/\*\*Last Updated:\*\* *//' | xargs)
+
+  echo -e "${BLUE}Project:${NC}       $project_name"
+  echo -e "${BLUE}Status:${NC}        $status"
+  echo -e "${BLUE}Last Updated:${NC}  $last_updated"
+  echo ""
+  echo -e "${BLUE}Current Task:${NC}  $current_task"
+  echo -e "${BLUE}Current Phase:${NC} $current_phase"
+  echo ""
+
+  # Count completed tasks
+  local completed_tasks=$(grep -c "Status:\*\* Completed ✅" "$PROJECT_STATE" || echo "0")
+  echo -e "${BLUE}Tasks Completed:${NC} $completed_tasks"
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  echo "View full state: cat $PROJECT_STATE"
+}
+
+# Show learned patterns
+cmd_patterns() {
+  check_project_state
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}SEAL Learned Patterns${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+
+  # Extract Section 5 from PROJECT-STATE.md
+  local in_patterns=0
+  local line_count=0
+  local max_lines=100
+
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^##\ 5\.\ SEAL\ LEARNED\ PATTERNS ]]; then
+      in_patterns=1
+    fi
+
+    if [ $in_patterns -eq 1 ]; then
+      echo "$line"
+      ((line_count++))
+
+      # Stop at next major section or max lines
+      if [[ "$line" =~ ^##\ [0-9]+\. ]] && [[ ! "$line" =~ SEAL ]]; then
+        break
+      fi
+
+      if [ $line_count -gt $max_lines ]; then
+        echo ""
+        echo "... (truncated, see full file for more)"
+        break
+      fi
+    fi
+  done < "$PROJECT_STATE"
+
+  if [ $in_patterns -eq 0 ]; then
+    echo "No patterns section found in PROJECT-STATE.md"
+  fi
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# Validate file against constraints
+cmd_validate() {
+  local file="$1"
+  if [ -z "$file" ]; then
+    echo -e "${RED}✗ Provide a file path${NC}"
+    echo "Usage: ./scripts/claude-vibecoding validate [file]"
+    exit 1
+  fi
+
+  if [ ! -f "$file" ]; then
+    echo -e "${RED}✗ File not found: $file${NC}"
+    exit 1
+  fi
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}Code Quality Check${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+  echo "File: $file"
+  echo ""
+
+  local checks_passed=0
+  local checks_failed=0
+  local checks_warned=0
+
+  # Check 1: console.log statements
+  if grep -n "console\.log" "$file" > /dev/null 2>&1; then
+    echo -e "${RED}✗ console.log statements found (remove before production)${NC}"
+    grep -n "console\.log" "$file" | head -5
+    ((checks_failed++))
+  else
+    echo -e "${GREEN}✓ No console.log statements${NC}"
+    ((checks_passed++))
+  fi
+
+  # Check 2: TODO/FIXME comments
+  if grep -n "TODO\|FIXME\|XXX" "$file" > /dev/null 2>&1; then
+    echo -e "${YELLOW}⚠ TODO/FIXME comments found${NC}"
+    grep -n "TODO\|FIXME\|XXX" "$file" | head -5
+    ((checks_warned++))
+  else
+    echo -e "${GREEN}✓ No TODO/FIXME comments${NC}"
+    ((checks_passed++))
+  fi
+
+  # Check 3: var usage (should use const/let)
+  if grep -nE "^\s*var " "$file" > /dev/null 2>&1; then
+    echo -e "${RED}✗ 'var' keyword found (use const/let instead)${NC}"
+    grep -nE "^\s*var " "$file" | head -5
+    ((checks_failed++))
+  else
+    echo -e "${GREEN}✓ No 'var' usage (using const/let)${NC}"
+    ((checks_passed++))
+  fi
+
+  # Check 4: Commented-out code
+  if grep -nE "^\s*//\s*[a-zA-Z0-9]" "$file" | grep -vE "^\s*//\s*(TODO|FIXME|NOTE|@)" > /dev/null 2>&1; then
+    echo -e "${YELLOW}⚠ Commented-out code found (consider removing)${NC}"
+    grep -nE "^\s*//\s*[a-zA-Z0-9]" "$file" | grep -vE "^\s*//\s*(TODO|FIXME|NOTE|@)" | head -5
+    ((checks_warned++))
+  else
+    echo -e "${GREEN}✓ No commented-out code${NC}"
+    ((checks_passed++))
+  fi
+
+  # Check 5: Empty catch blocks
+  if grep -Pzo "catch\s*\([^)]*\)\s*\{\s*\}" "$file" > /dev/null 2>&1; then
+    echo -e "${RED}✗ Empty catch blocks found (handle errors properly)${NC}"
+    ((checks_failed++))
+  else
+    echo -e "${GREEN}✓ No empty catch blocks${NC}"
+    ((checks_passed++))
+  fi
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo -e "${GREEN}Summary:${NC} $checks_passed passed, ${RED}$checks_failed failed${NC}, ${YELLOW}$checks_warned warnings${NC}"
+  echo ""
+
+  if [ $checks_failed -gt 0 ]; then
+    echo "Review and fix issues before marking task complete."
+    exit 1
+  fi
+}
+
+# Show metrics
+cmd_metrics() {
+  check_project_state
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}Project Metrics${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+
+  # Extract metrics from PROJECT-STATE.md Section 8
+  local total_tasks=$(grep "^\*\*Total Tasks Completed:\*\*" "$PROJECT_STATE" | grep -oE "[0-9]+" || echo "0")
+  local success_rate=$(grep "^\*\*Success Rate" "$PROJECT_STATE" | sed 's/.*: *//' | xargs || echo "N/A")
+  local avg_iterations=$(grep "^\*\*Average Iterations" "$PROJECT_STATE" | sed 's/.*: *//' | xargs || echo "N/A")
+
+  echo -e "${BLUE}Total Tasks:${NC}         $total_tasks"
+  echo -e "${BLUE}Success Rate:${NC}        $success_rate"
+  echo -e "${BLUE}Avg Iterations:${NC}      $avg_iterations"
+  echo ""
+
+  # Extract pattern confidence
+  echo -e "${YELLOW}Pattern Confidence Levels:${NC}"
+  grep "^\*\*Confidence:\*\*" "$PROJECT_STATE" | head -10 | while read -r line; do
+    echo "  • $line"
+  done
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# Show phase details
+cmd_phase() {
+  local phase="${1:-help}"
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+
+  case "$phase" in
+    0)
+      echo -e "${GREEN}Phase 0: TRIAGE${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Purpose: Classify request as TRIVIAL or COMPLEX"
+      echo ""
+      echo "Classification:"
+      echo "  • TRIVIAL: Visual/text change, skip to Phase 2"
+      echo "  • COMPLEX: New feature/architecture, go to Phase 1"
+      echo ""
+      echo "Next: Phase 1 (if COMPLEX) or Phase 2 (if TRIVIAL)"
+      ;;
+    1|1.*)
+      echo -e "${GREEN}Phase 1: PLANNING${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Subphases:"
+      echo "  1.1 Discovery - Ask outcome-focused questions"
+      echo "  1.2 Research - Check existing code patterns"
+      echo "  1.3 Brainstorm - Present 3 approaches"
+      echo "  1.4 Evaluation - Score and recommend approach"
+      echo "  1.5 Premortem - Identify risks before building"
+      echo "  1.6 Specification - Create implementation plan"
+      echo "  1.7 Approval - Get user GO signal"
+      echo ""
+      echo "Key: STOP & WAIT after each subphase"
+      echo "Next: Phase 2 (Coding) after approval"
+      ;;
+    2|2.*)
+      echo -e "${GREEN}Phase 2: CODING${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Subphases:"
+      echo "  2.1 Scaffolding - Create file structure"
+      echo "  2.2 Connectivity - Test with dummy data"
+      echo "  2.3 Core Logic - Implement features"
+      echo "  2.4 UI Binding - Connect to real data"
+      echo ""
+      echo "Key: Check after each step (compile, run, verify)"
+      echo "Next: Phase 3 (Testing)"
+      ;;
+    3|3.*)
+      echo -e "${GREEN}Phase 3: TESTING${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Subphases:"
+      echo "  3.1 Manual Walkthrough - Test happy paths"
+      echo "  3.2 Edge Case Testing - Test risks from premortem"
+      echo "  3.3 Fix & Verify - Fix bugs, verify fixes work"
+      echo ""
+      echo "Key: Create test steps (action → expected outcome)"
+      echo "Next: Phase 4 (Review)"
+      ;;
+    4|4.*)
+      echo -e "${GREEN}Phase 4: REVIEW${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Subphases:"
+      echo "  4.1 Code Audit - Clean code, remove console.log"
+      echo "  4.2 Documentation - Update docs if needed"
+      echo "  4.3 SEAL Learning - Rate task, update patterns"
+      echo ""
+      echo "Key: User rates 1-5, AI learns from rating"
+      echo "Next: Ready for next task"
+      ;;
+    help|*)
+      echo -e "${GREEN}Workflow Phases${NC}"
+      echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "Phase 0: Triage - Classify as TRIVIAL or COMPLEX"
+      echo "Phase 1: Planning - Discovery through Approval (7 subphases)"
+      echo "Phase 2: Coding - Scaffolding through UI Binding (4 subphases)"
+      echo "Phase 3: Testing - Manual testing and fixes (3 subphases)"
+      echo "Phase 4: Review - Audit, docs, and SEAL learning (3 subphases)"
+      echo ""
+      echo "Usage: ./scripts/claude-vibecoding phase [0-4]"
+      ;;
+  esac
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# Start a new task
+cmd_task() {
+  local description="$*"
+  if [ -z "$description" ]; then
+    echo -e "${RED}✗ Provide a task description${NC}"
+    echo "Usage: ./scripts/claude-vibecoding task [description]"
+    exit 1
+  fi
+
+  check_project_state
+
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${GREEN}New Task Started${NC}"
+  echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+  echo "Description: $description"
+  echo ""
+  echo "Next steps in your AI chat:"
+  echo ""
+  echo "  1. Load system:"
+  echo "     /vibecoding"
+  echo ""
+  echo "  2. Run triage:"
+  echo "     /triage $description"
+  echo ""
+  echo "  3. Follow workflow phases"
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# Main dispatcher
+main() {
+  local command="${1:-help}"
+  shift || true
+
+  case "$command" in
+    init)        cmd_init ;;
+    task)        cmd_task "$@" ;;
+    triage)      cmd_triage "$@" ;;
+    status)      cmd_status ;;
+    patterns)    cmd_patterns ;;
+    validate)    cmd_validate "$@" ;;
+    metrics)     cmd_metrics ;;
+    phase)       cmd_phase "$@" ;;
+    help|--help|-h) show_help ;;
+    *)
+      echo -e "${RED}Unknown command: $command${NC}"
+      echo ""
+      show_help
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"

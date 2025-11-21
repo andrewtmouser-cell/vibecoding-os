@@ -2,6 +2,10 @@
 
 **SEAL = Self-Adapting LLM**
 
+**Integration**: SEAL activates during Phase 4.3 of the Workflow Protocol (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+**Storage**: All patterns stored in PROJECT-STATE.md Section 5.B.
+**Foundation**: SEAL implements the "self-improving" principle from [00-core-philosophy.md](00-core-philosophy.md).
+
 ## Purpose
 
 SEAL makes AI get BETTER at building YOUR projects over time by learning from successful completions.
@@ -18,21 +22,23 @@ Task → Execute → Rate → Extract Patterns → Apply to Next Task → Improv
   └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Three Phases of Learning
+**When this executes**: Phase 4.3 of every task (see [01-workflow-protocol.md](01-workflow-protocol.md) Section: Phase 4.3).
 
-**Phase 1: Data Collection** (Tasks 1-5)
+### Three Stages of SEAL Learning
+
+**Stage 1: Data Collection** (Tasks 1-5)
 - Execute tasks using default approaches
 - Record what works and what doesn't
 - Build initial pattern library
 - Low confidence patterns
 
-**Phase 2: Pattern Emergence** (Tasks 6-15)
+**Stage 2: Pattern Emergence** (Tasks 6-15)
 - Patterns start to form
 - Apply patterns with caution
 - Refine based on results
 - Medium confidence patterns
 
-**Phase 3: Automatic Application** (Tasks 16+)
+**Stage 3: Automatic Application** (Tasks 16+)
 - Strong patterns established
 - Auto-apply with high confidence
 - Minimal iteration needed
@@ -45,6 +51,8 @@ Task → Execute → Rate → Extract Patterns → Apply to Next Task → Improv
 ### 1. Triage Patterns
 
 **Learns**: What YOU consider trivial vs complex
+
+**Applied in**: Phase 0: Triage (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -62,9 +70,13 @@ Pattern Formed (Confidence: 0.82):
 - Complex indicators: "auth", "database", "new feature"
 ```
 
+---
+
 ### 2. Discovery Patterns (Questions)
 
 **Learns**: Which questions get useful answers from YOU
+
+**Applied in**: Phase 1.1: Discovery (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -91,9 +103,13 @@ Ineffective questions:
 - Technical jargon questions
 ```
 
+---
+
 ### 3. Research Patterns (Where to Look)
 
 **Learns**: Which files contain useful context for different task types
+
+**Applied in**: Phase 1.2: Research (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -115,9 +131,13 @@ For authentication tasks:
 - Rarely needed: config, package files
 ```
 
+---
+
 ### 4. Architecture Preferences
 
 **Learns**: Which approaches YOU actually choose
+
+**Applied in**: Phase 1.3: Brainstorm and Phase 1.4: Evaluation (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -131,9 +151,14 @@ Pattern Formed (Confidence: 0.93):
 - Frame complexity as "future headache reduction"
 ```
 
+---
+
 ### 5. Coding Style Patterns
 
 **Learns**: YOUR code conventions and style
+
+**Applied in**: Phase 2 subphases (see [01-workflow-protocol.md](01-workflow-protocol.md))
+**Must conform to**: [03-constraints-quality.md](03-constraints-quality.md)
 
 **Example Evolution**:
 
@@ -156,9 +181,13 @@ Pattern Formed (Confidence: 0.95):
 - Always include: Loading states, TypeScript types
 ```
 
+---
+
 ### 6. Testing Preferences
 
 **Learns**: How YOU actually test
+
+**Applied in**: Phase 3: Testing (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -177,9 +206,13 @@ User testing approach:
 - Test script format: Numbered steps with expected outcomes
 ```
 
+---
+
 ### 7. Documentation Preferences
 
 **Learns**: What docs YOU actually want
+
+**Applied in**: Phase 4.2: Documentation (see [01-workflow-protocol.md](01-workflow-protocol.md))
 
 **Example Evolution**:
 
@@ -200,6 +233,63 @@ User skips:
 - Technical architecture details
 - Deployment instructions (not deploying yet)
 - API documentation (prefers code comments)
+```
+
+---
+
+### 8. UI Patterns
+
+**Learns**: YOUR component structure and styling preferences
+
+**Applied in**: Phase 2.4: UI Binding (see [01-workflow-protocol.md](01-workflow-protocol.md))
+
+**Example Evolution**:
+
+```markdown
+Task 4: Used inline styles
+→ Rating: 2/5 ("Use CSS Modules")
+
+Task 6: Used CSS Modules
+→ Rating: 5/5
+
+Pattern Formed (Confidence: 0.91):
+Component Structure:
+- Directory: src/components/ComponentName/
+- Files: index.tsx, styles.module.css, types.ts
+
+Styling Approach:
+- Method: CSS Modules
+- Responsive: Mobile-first with media queries
+```
+
+---
+
+### 9. Dummy Data Preferences
+
+**Learns**: What dummy data style you prefer
+
+**Applied in**: Phase 2.2: Connectivity (see [01-workflow-protocol.md](01-workflow-protocol.md))
+
+**Example Evolution**:
+
+```markdown
+Task 2: Used "foo", "bar" as dummy data
+→ Rating: 3/5 ("Use realistic data")
+
+Task 5: Used "John Doe", "test@example.com"
+→ Rating: 5/5
+
+Pattern Formed (Confidence: 0.86):
+Good Dummy Data:
+- Names: "John Doe", "Jane Smith"
+- Emails: "test@example.com"
+- Dates: Recent but not today
+- IDs: Sequential (1, 2, 3)
+
+Avoid:
+- "foo", "bar", "baz"
+- "asdf", "test123"
+- Lorem ipsum for names
 ```
 
 ---
@@ -283,7 +373,9 @@ Task 16: Similar task, check pattern
 
 ## Pattern Storage
 
-All patterns stored in PROJECT-STATE.md Section 5.B
+**Location**: All patterns stored in PROJECT-STATE.md Section 5.B
+
+**Format defined here, storage location in**: [templates/PROJECT-STATE.md](templates/PROJECT-STATE.md)
 
 ### Pattern Entry Format
 
@@ -318,9 +410,10 @@ All patterns stored in PROJECT-STATE.md Section 5.B
 
 ## SEAL Update Protocol
 
-### After Every Task (Phase 4.3)
+**When**: After every task completion, in Phase 4.3 (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+**Where**: All updates go to PROJECT-STATE.md sections (see template in [templates/PROJECT-STATE.md](templates/PROJECT-STATE.md)).
 
-**Step 1: Ask for Rating**
+### Step 1: Ask for Rating
 
 ```markdown
 Rating (1-5): ___
@@ -332,20 +425,20 @@ What could be better:
 -
 ```
 
-**Step 2: Classify Task**
+### Step 2: Classify Task
 
 ```markdown
 Task Type: [Component Creation / API Integration / Bug Fix / etc.]
 ```
 
-**Step 3: Determine if Successful**
+### Step 3: Determine if Successful
 
 ```
 If Rating >= 4: SUCCESS (learn from this)
 If Rating <= 3: NEEDS IMPROVEMENT (note what to avoid)
 ```
 
-**Step 4: Extract Success Factors (if successful)**
+### Step 4: Extract Success Factors (if successful)
 
 What specifically worked:
 - Which files were useful?
@@ -354,7 +447,7 @@ What specifically worked:
 - What communication was clear?
 - What decisions were good?
 
-**Step 5: Update Patterns**
+### Step 5: Update Patterns
 
 ```
 If pattern exists for this task type:
@@ -367,17 +460,20 @@ If no pattern exists and 3+ similar successful tasks:
 → Set initial confidence based on consistency
 ```
 
-**Step 6: Update PROJECT-STATE.md**
+### Step 6: Update PROJECT-STATE.md
 
-- Section 5.A.2: Mark task complete
+- Section 2: Mark task complete
 - Section 5.B: Update relevant patterns
 - Section 5.C: Update if structure changed
-- Section 5.D: Update if bugs found
-- Section 5.E: Update if new rules discovered
+- Section 6: Update if bugs found
+- Section 8: Update metrics
 
 ---
 
 ## Pattern Application
+
+**When to check**: At the start of every workflow phase (see [01-workflow-protocol.md](01-workflow-protocol.md) for specific checkpoints).
+**Constraints**: All patterns must comply with [03-constraints-quality.md](03-constraints-quality.md) rules.
 
 ### Before Starting a Task
 
@@ -433,6 +529,8 @@ If pattern didn't work:
 
 ## Meta-Patterns (Every 10 Tasks)
 
+**Universal rules that apply across all phases** (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+
 ### Pattern Synthesis
 
 After every ~10 tasks, analyze patterns across task types:
@@ -466,28 +564,28 @@ Success rate when skipped: 67%
 
 ## SEAL Benefits Over Time
 
-### Week 1 (Tasks 1-5)
+### Stage 1: Data Collection (Tasks 1-5)
 
 - AI follows workflow consistently
 - Code quality stable
 - Learning your preferences
 - **Result**: Predictable, methodical work
 
-### Week 2-3 (Tasks 6-15)
+### Stage 2: Pattern Emergence (Tasks 6-15)
 
 - Patterns emerging
 - Fewer clarifying questions needed
 - AI anticipates your needs
 - **Result**: Faster execution, fewer iterations
 
-### Week 4+ (Tasks 16-30)
+### Stage 3: Automatic Application (Tasks 16+)
 
 - Strong patterns established
 - Automatic pattern application
 - High first-try success rate
 - **Result**: Significant time savings
 
-### Month 2+ (Tasks 31+)
+### Long-term (Tasks 31+)
 
 - Pattern library comprehensive
 - Minimal intervention needed
@@ -498,7 +596,8 @@ Success rate when skipped: 67%
 
 ## Success Metrics
 
-Track in PROJECT-STATE.md Section 5.F:
+**Track in**: PROJECT-STATE.md Section 8
+**Goal benchmarks from**: [00-core-philosophy.md](00-core-philosophy.md) Section: Success Metrics
 
 **Primary Metrics**:
 - **Overall Success Rate**: % of tasks rated ≥ 4

@@ -22,7 +22,7 @@ Just like your computer needs Windows/Mac to run programs reliably, AI needs a s
 
 ## The Three Foundations
 
-### 1. **Keep It Boring**
+### 1. Keep It Boring
 
 **Philosophy**: Boring code works. Clever code breaks.
 
@@ -42,9 +42,11 @@ Just like your computer needs Windows/Mac to run programs reliably, AI needs a s
 ✅ GOOD: "Use Next.js - one codebase with frontend + API routes + database"
 ```
 
+**Implementation**: This principle is enforced through architecture constraints in [03-constraints-quality.md](03-constraints-quality.md) Section 3.
+
 ---
 
-### 2. **The Junior Dev Rule**
+### 2. The Junior Dev Rule
 
 **Philosophy**: Code is a liability. Clarity is an asset.
 
@@ -72,9 +74,11 @@ function calculateTotalPrice(items) {
 }
 ```
 
+**Implementation**: This principle is enforced through code quality constraints in [03-constraints-quality.md](03-constraints-quality.md) Sections 1-2.
+
 ---
 
-### 3. **Methodical Over Fast**
+### 3. Methodical Over Fast
 
 **Philosophy**: You can't "move fast and break things" if you can't fix the things you break.
 
@@ -92,6 +96,8 @@ function calculateTotalPrice(items) {
 
 ✅ GOOD: Idea → Plan → Specify → Code → Test → Review → Ship
 ```
+
+**Implementation**: This principle is implemented as the 5-Phase Workflow in [01-workflow-protocol.md](01-workflow-protocol.md).
 
 ---
 
@@ -160,6 +166,8 @@ SEAL result:
    - Features vs simplicity
    - When to ask vs when to decide
 
+**Implementation**: The complete SEAL learning system is detailed in [02-seal-engine.md](02-seal-engine.md). AI implementation instructions are in [04-ai-instructions.md](04-ai-instructions.md) Rule 7.
+
 ---
 
 ## The Workflow Protocol
@@ -179,11 +187,12 @@ SEAL result:
 4. Evaluation - Score options
 5. Premortem - Identify risks
 6. Specification - Detailed plan
+7. Approval - Get explicit "GO"
 
 **Phase 2: Coding** (Check after each)
 1. Scaffolding - Structure
 2. Connectivity - Hello world test
-3. Core Logic - Implement
+3. Core Logic - Implement features
 4. UI Binding - Connect everything
 
 **Phase 3: Testing**
@@ -203,6 +212,8 @@ Each phase builds on the last. Skipping causes:
 - No research → reinventing existing patterns
 - No premortem → unexpected failures
 - No testing → broken deployments
+
+**Implementation**: Complete workflow procedures are in [01-workflow-protocol.md](01-workflow-protocol.md).
 
 ---
 
@@ -228,7 +239,7 @@ If something fails:
 3. Document what went wrong
 4. Update patterns to prevent recurrence
 
-### Quality Checklist (Phase 4):
+### Quality Checklist (Phase 4.1):
 
 Before declaring "done":
 - [ ] Code readable by junior dev?
@@ -238,6 +249,8 @@ Before declaring "done":
 - [ ] Follows established patterns?
 - [ ] No console.log left in production?
 - [ ] Documentation updated?
+
+**Implementation**: All quality rules and constraints are defined in [03-constraints-quality.md](03-constraints-quality.md).
 
 ---
 
@@ -263,13 +276,15 @@ Before declaring "done":
 
 ### Measuring Improvement:
 
-Track in PROJECT-STATE.md:
+Track in PROJECT-STATE.md Section 8:
 - **Success rate**: % of tasks rated ≥ 4/5
 - **Iteration count**: Avg back-and-forth per task
 - **Pattern confidence**: Growing over time
 - **First-try success**: % done in one iteration
 
 **Goal**: After 20 tasks, success rate ≥ 80% and iteration count ≤ 1.5
+
+**Implementation**: Metrics are tracked in [templates/PROJECT-STATE.md](templates/PROJECT-STATE.md) Section 8. SEAL updates these automatically during Phase 4.3 (see [02-seal-engine.md](02-seal-engine.md) Section: SEAL Update Protocol).
 
 ---
 
@@ -286,9 +301,9 @@ Track in PROJECT-STATE.md:
 - Standard libraries (if no standard exists)
 
 **How to break rules**:
-1. Document WHY in Phase 1
+1. Document WHY in Phase 1.6 (Specification) per [01-workflow-protocol.md](01-workflow-protocol.md)
 2. Get user approval in Phase 1.7
-3. Note in PROJECT-STATE.md
+3. Note in PROJECT-STATE.md Section 9: Important Decisions
 4. Review in Phase 4
 
 ---

@@ -2,6 +2,12 @@
 
 > **Copy this file to `.vibecoding/PROJECT-STATE.md` in your project root**
 
+**System Integration**: This file is the single source of truth for AI state.
+- Loaded at start of every session per [04-ai-instructions.md](04-ai-instructions.md)
+- Updated after every task per [01-workflow-protocol.md](01-workflow-protocol.md) Phase 4.3
+- Pattern storage format defined in [02-seal-engine.md](02-seal-engine.md)
+- Metrics tracked per [00-core-philosophy.md](00-core-philosophy.md) Section: Success Metrics
+
 ---
 
 ## QUICK REFERENCE
@@ -409,21 +415,18 @@ project-root/
 
 ### For AI:
 
-**At Start of Every Session:**
-1. Read this entire file
-2. Load patterns from Section 5
-3. Check current task and phase
-4. Review project structure
+**At Start of Every Session**:
+1. Read this entire file per [04-ai-instructions.md](04-ai-instructions.md) Rule 5
+2. Load patterns from Section 5.B per [02-seal-engine.md](02-seal-engine.md) Section: Pattern Application
+3. Check current task and phase from [01-workflow-protocol.md](01-workflow-protocol.md)
 
-**After Every Completed Task:**
-1. Update Section 2: Task Log
-2. Ask user for feedback
-3. Update Section 5: Patterns (if rating ≥ 4)
-4. Update Section 6: Issues (if bugs found)
-5. Update Section 8: Metrics
+**After Every Completed Task**:
+1. Update per [01-workflow-protocol.md](01-workflow-protocol.md) Phase 4.3
+2. Follow SEAL Update Protocol from [02-seal-engine.md](02-seal-engine.md)
+3. Update metrics per [00-core-philosophy.md](00-core-philosophy.md) Section: Success Metrics
 
 **Before Starting Any Task:**
-1. Check Section 5 for relevant patterns
+1. Check Section 5.B for relevant patterns
 2. Check Section 4 for project structure
 3. Check Section 6 for known issues
 

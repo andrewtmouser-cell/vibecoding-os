@@ -1,5 +1,9 @@
 # Constraints & Quality Guardrails
 
+**Foundation**: These constraints enforce the principles from [00-core-philosophy.md](00-core-philosophy.md).
+**Enforcement**: AI must follow these per [04-ai-instructions.md](04-ai-instructions.md) Rule 6.
+**Application**: These rules apply during Phase 2 (Coding) and Phase 4.1 (Code Audit) per [01-workflow-protocol.md](01-workflow-protocol.md).
+
 **These rules apply 100% of the time. NEVER violate them.**
 
 ---
@@ -9,6 +13,9 @@
 ### 1. No "Clever" Code
 
 **Rule**: Write code that a junior developer could read and understand immediately.
+
+**Foundation**: This enforces the "Junior Dev Rule" from [00-core-philosophy.md](00-core-philosophy.md).
+**Verification**: Checked in Phase 4.1: Code Audit (see [01-workflow-protocol.md](01-workflow-protocol.md)).
 
 **Why**: The user can't debug complex code. If AI can't explain it in plain English, don't write it.
 
@@ -35,6 +42,8 @@ function convertArrayToObject(items) {
 ### 2. Explicit > DRY
 
 **Rule**: It's better to repeat 3 lines of code in two files than to create a complex shared dependency.
+
+**Foundation**: This enforces the "Junior Dev Rule" from [00-core-philosophy.md](00-core-philosophy.md).
 
 **Why**: Non-technical users can understand repeated code. They can't untangle complex abstractions.
 
@@ -101,6 +110,9 @@ async function handleSignupSubmit(data) {
 
 **Rule**: Default to monoliths. Avoid orchestration complexity.
 
+**Foundation**: This enforces the "Keep It Boring" principle from [00-core-philosophy.md](00-core-philosophy.md).
+**Application**: Applied during Phase 1.3: Brainstorm and Phase 1.4: Evaluation (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+
 #### 3.1: Default to Monoliths
 
 ✅ **PREFER**:
@@ -149,6 +161,9 @@ async function handleSignupSubmit(data) {
 
 **Rule**: Explain technical choices using non-technical analogies.
 
+**Foundation**: Required by "Junior Dev Rule" from [00-core-philosophy.md](00-core-philosophy.md).
+**Examples**: Good communication examples in [04-ai-instructions.md](04-ai-instructions.md) Section: Communication Guidelines.
+
 **Examples**:
 
 ❌ **BAD**:
@@ -177,6 +192,9 @@ async function handleSignupSubmit(data) {
 
 **Rule**: ALWAYS state which Phase/Subphase you are currently in at the start of your response.
 
+**Format defined in**: [01-workflow-protocol.md](01-workflow-protocol.md)
+**AI requirement**: [04-ai-instructions.md](04-ai-instructions.md) Rule 2
+
 **Format**:
 ```
 Phase X.Y: [PHASE NAME]
@@ -197,6 +215,8 @@ Phase X.Y: [PHASE NAME]
 ### 6. All User Actions Must Have Error Handling
 
 **Rule**: Every button click, form submission, API call must handle errors.
+
+**Checked in**: Phase 4.1: Code Audit (see [01-workflow-protocol.md](01-workflow-protocol.md)).
 
 ❌ **FORBIDDEN**:
 ```javascript
@@ -225,6 +245,8 @@ async function handleSubmit() {
 
 **Rule**: If something takes time, show the user it's happening.
 
+**Checked in**: Phase 4.1: Code Audit (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+
 ❌ **FORBIDDEN**:
 ```javascript
 <button onClick={handleSubmit}>Login</button>
@@ -242,6 +264,8 @@ async function handleSubmit() {
 ### 8. Error Messages in Plain English
 
 **Rule**: Error messages must tell the user what happened AND what to do.
+
+**Checked in**: Phase 4.1: Code Audit (see [01-workflow-protocol.md](01-workflow-protocol.md)).
 
 ❌ **BAD**:
 ```
@@ -406,7 +430,9 @@ for (const user of users) {
 
 ### 14. If an Error Occurs
 
-**Rule**: Do NOT rewrite the whole file. Provide only the specific change/diff.
+**Rule**: DO NOT rewrite the whole file. Provide only the specific change/diff.
+
+**Application**: This emergency protocol applies during Phase 2: Coding (see [01-workflow-protocol.md](01-workflow-protocol.md) Section: Coding Emergency Rules).
 
 **Why**: Rewriting risks introducing new bugs. Surgical fixes are safer.
 
@@ -427,6 +453,8 @@ To:
 
 **Rule**: ROLLBACK to the last working state and try a simpler approach.
 
+**Application**: Applies during Phase 2: Coding (see [01-workflow-protocol.md](01-workflow-protocol.md) Section: Coding Emergency Rules).
+
 **Why**: Repeatedly trying the same complex fix wastes time. Simplify.
 
 **Process**:
@@ -440,6 +468,9 @@ To:
 ---
 
 ## Quality Checklist (Phase 4.1)
+
+**When to Use**: Phase 4.1: Code Audit (see [01-workflow-protocol.md](01-workflow-protocol.md)).
+**AI requirement**: [04-ai-instructions.md](04-ai-instructions.md) must complete this checklist before proceeding to Phase 4.2.
 
 Before declaring "done", verify:
 
