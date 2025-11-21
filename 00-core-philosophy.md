@@ -1,5 +1,9 @@
 # Core Philosophy
 
+**This document explains the mindset and rules that guide every decision in Vibecoding OS.**
+
+---
+
 ## Origin Story
 
 This system emerged from real frustration: coding with AI created chaos instead of progress. Each session started from scratch. Quality varied wildly. Simple features required endless iteration. Context resets destroyed momentum.
